@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign in — Vivek Financial Focus Limited</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #030303;
+    --panel: rgba(20, 20, 22, 0.85);
+    --border: rgba(255, 255, 255, 0.12);
+    --text: #f0f0f0;
+    --muted: #9a9a9a;
+    --accent: #d4923a;
+    --accent-glow: rgba(212, 146, 58, 0.45);
+    --error: #ff6b6b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,0.3), transparent),
+      radial-gradient(1px 1px at 45% 80%, rgba(255,255,255,0.35), transparent),
+      radial-gradient(1px 1px at 65% 15%, rgba(255,255,255,0.25), transparent),
+      radial-gradient(2px 2px at 10% 70%, rgba(255,255,255,0.2), transparent);
+    pointer-events: none;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: -50% -10% auto auto;
+    width: 60vmin;
+    height: 60vmin;
+    background: radial-gradient(circle at center, var(--accent-glow), transparent 60%);
+    filter: blur(40px);
+    pointer-events: none;
+  }
+  .login-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+  }
+  .brand {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .brand-mark {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--text);
+  }
+  .brand-sub {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 3px;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 32px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .lede {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  .field { margin-bottom: 18px; }
+  .panel input[type=text],
+  .panel input[type=email],
+  .panel input[type=password] {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    letter-spacing: 0.2px;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+            appearance: none;
+  }
+  .panel input::placeholder { color: rgba(255,255,255,0.35); }
+  .panel input:hover {
+    background: rgba(255,255,255,0.055);
+    border-color: rgba(255,255,255,0.22);
+  }
+  .panel input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: rgba(255,255,255,0.06);
+    box-shadow: 0 0 0 3px rgba(212, 146, 58, 0.18);
+  }
+  /* Keep autofilled inputs on-brand instead of Chrome's yellow */
+  .panel input:-webkit-autofill,
+  .panel input:-webkit-autofill:hover,
+  .panel input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text);
+    -webkit-box-shadow: 0 0 0 1000px rgba(20,20,22,0.95) inset;
+    box-shadow: 0 0 0 1000px rgba(20,20,22,0.95) inset;
+    caret-color: var(--text);
+    transition: background-color 9999s ease-in-out 0s;
+  }
+  button[type=submit] {
+    width: 100%;
+    padding: 14px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), #b97a26);
+    color: #1a1208;
+    font-family: 'Anton', sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+  }
+  button[type=submit]:hover:not(:disabled) {
+    box-shadow: 0 8px 24px var(--accent-glow);
+  }
+  button[type=submit]:active:not(:disabled) { transform: translateY(1px); }
+  button[type=submit]:disabled { opacity: 0.6; cursor: wait; }
+  .error {
+    margin-top: 16px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    color: var(--error);
+    font-size: 13px;
+    display: none;
+  }
+  .error.visible { display: block; }
+  .footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 24px;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="brand">
+      <div class="brand-mark">VIVEK FINANCIAL</div>
+      <div class="brand-sub">Focus Limited · Client Portal</div>
+    </div>
+    <div class="panel">
+      <h1>SIGN IN</h1>
+      <p class="lede">Enter your user ID and password to access the client portal.</p>
+      <form id="login-form" autocomplete="on">
+        <div class="field">
+          <label for="userid">User ID</label>
+          <input type="text" id="userid" name="userid" required autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false" autofocus>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required autocomplete="current-password">
+        </div>
+        <button type="submit" id="submit-btn">SIGN IN</button>
+        <div class="error" id="error-msg"></div>
+      </form>
+    </div>
+    <div class="footer">AUTHORISED ACCESS ONLY</div>
+  </div>
+
+  <script src="auth.js"></script>
+  <script>
+    (function () {
+      // If already logged in, jump straight to the redirect target.
+      if (window.VFAuth.isAuthenticated()) {
+        window.location.replace(getNext());
+        return;
+      }
+
+      function getNext() {
+        const params = new URLSearchParams(location.search);
+        const next = params.get("next");
+        if (next && next.startsWith("/") && !next.startsWith("//")) return next;
+        return "portal.html";
+      }
+
+      const form = document.getElementById("login-form");
+      const errorEl = document.getElementById("error-msg");
+      const btn = document.getElementById("submit-btn");
+
+      const ERROR_MESSAGES = {
+        missing_credentials: "Please enter both user ID and password.",
+        invalid_credentials: "User ID or password is incorrect.",
+        inactive: "This account is currently inactive. Contact the administrator.",
+        no_users: "No users configured. Contact the administrator.",
+        sheet_misconfigured: "Server configuration error. Contact the administrator.",
+        endpoint_not_configured: "Authentication endpoint not configured.",
+        network_error: "Could not reach the authentication server. Check your connection.",
+        server_error: "An unexpected server error occurred. Try again.",
+      };
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        errorEl.classList.remove("visible");
+        btn.disabled = true;
+        btn.textContent = "SIGNING IN…";
+
+        const userId = document.getElementById("userid").value.trim();
+        const password = document.getElementById("password").value;
+
+        const result = await window.VFAuth.login(userId, password);
+        if (result.ok) {
+          window.location.replace(getNext());
+          return;
+        }
+
+        errorEl.textContent = ERROR_MESSAGES[result.error] || ("Sign-in failed: " + result.error);
+        errorEl.classList.add("visible");
+        btn.disabled = false;
+        btn.textContent = "SIGN IN";
+      });
+    })();
+  </script>
+</body>
+</html>
