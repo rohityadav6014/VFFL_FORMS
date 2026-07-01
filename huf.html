@@ -6863,7 +6863,7 @@ function renderVivekNonIndividualKycPage(doc, data, PW, PH, M, RIGHT_X, CONTENT_
         placeholderChar: '_'
       });
 
-      flatpickr(el, {
+      var fp = flatpickr(el, {
         dateFormat: "d/m/Y",
         allowInput: true,
         onChange: function(selectedDates, dateStr, instance) {
@@ -6871,6 +6871,18 @@ function renderVivekNonIndividualKycPage(doc, data, PW, PH, M, RIGHT_X, CONTENT_
           mask.updateValue();
         }
       });
+
+      // Default the Declaration date to today (editable). This value feeds
+      // every date box in the generated PDF, so today's date shows there too.
+      if (el.name === 'declarationDate' && !mask.unmaskedValue) {
+        var now = new Date();
+        var today = String(now.getDate()).padStart(2, '0') + '/' +
+                    String(now.getMonth() + 1).padStart(2, '0') + '/' +
+                    now.getFullYear();
+        mask.value = today;
+        mask.updateValue();
+        try { fp.setDate(now, false); } catch (e) {}
+      }
     };
 
     document.querySelectorAll('input[placeholder="dd/mm/yyyy"]').forEach(function(el) {
