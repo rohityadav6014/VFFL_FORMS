@@ -1,4 +1,0 @@
-.claude/
-.DS_Store
-*.ps1
-logo_b64.txt
